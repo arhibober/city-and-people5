@@ -58,11 +58,6 @@ li.page-item {
   margin: 5px;
 }
 
-/*div#swipebox-overlay {
-  width: 0 !important;
-  height: 0 !important;
-}*/
-
 #voices {
   display: table;
 }
@@ -86,35 +81,25 @@ li.page-item {
   height: 100px;
 }
 
-.object-gallery li
-{
-	display: inline-block;
-	width: 200px;
-	text-align: center;
+.object-gallery li {
+  display: inline-block;
+  width: 200px;
+  text-align: center;
 }
 
-.object-gallery li div
-{
-	display: table-row;
+.object-gallery li div {
+  display: table-row;
 }
 
-.object-gallery li img
-{
-	height: 100px;
-	width: auto;
-	margin: 10px;
+.object-gallery li img {
+  height: 100px;
+  width: auto;
+  margin: 10px;
 }
 
-.card-img-top
-{
-	height: auto;
+.card-img-top {
+  height: auto;
 }
-
-/*#object_archive .card
-{
-	width: 300px;
-	float: left;
-}*/
 
 .row div.row {
   display: -ms-flexbox;
@@ -125,23 +110,20 @@ li.page-item {
   margin-left: -15px;
 }
 
-.row h4
-{
-	font-size: 1.5rem;
-	font-weight: 500;
-	line-height: 1.2;
+.row h4 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .card-text:last-child {
   margin-bottom: 0;
 }
 
-div.h-100.card
-{
-	height: auto !important;
+div.h-100.card {
+  height: auto !important;
 }
 
-.row .col-md-8
-{
-	top: 30px;
+.col-md-8 h3 {
+  margin-bottom: 0;
 }

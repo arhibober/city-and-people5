@@ -156,19 +156,14 @@ the_content();
 					),
 					'post__not_in' => array ($post->ID)
 				);
-				//$query = new WP_Query( $args );
-				//echo " a ";
-				//print_r ($args);
 				$my_query = new WP_Query( $args );
-				//echo " mq: ";
-				//print_r ($my_query);
  
 				// если посты, удовлетворяющие нашим условиям, найдены
 				if( $my_query->have_posts() ) :
 					
 					// выводим заголовок блока похожих постов
 					echo "<h3>";
-					_e("Similar in date objects";
+					_e("Similar in date objects");
 					echo "</h3>";
 					
 					// запускаем цикл
@@ -214,8 +209,6 @@ if( $images ): ?>
         <?php endforeach; ?>
     </ul>
 <?php endif;
-//echo " gfm: ";
-//1print_r (get_field ("мапа"));
 if (get_post_meta($post->ID, 'мапа', true) !== '')
 {
 	echo "<h3>";

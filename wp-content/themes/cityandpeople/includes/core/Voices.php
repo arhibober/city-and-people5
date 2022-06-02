@@ -7,7 +7,6 @@ class Voices
 
     public function example__like(WP_REST_Request $request)
     {
-        //echo "gg";
         // Custom field slug
         $field_name = 'voices';
         // Get the current like number for the post
@@ -36,9 +35,5 @@ class Voices
             $relation_result = $wpdb->get_results("INSERT INTO likes VALUES (" . get_the_ID() . "," . $_SERVER["REMOTE_ADDR"] . ")");
             wp_localize_script('jquery', 'is_like', "false");
         }
-        /*wp_send_json_success(array(
-            'count' => $relation_result,
-        ));*/
-
     }
 }

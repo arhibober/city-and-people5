@@ -208,7 +208,7 @@
 				echo "</h3><br/>
 					<a href='".get_field ("дивись_також") ["url"]."'>".get_field ("дивись_також") ["title"]."</a>";
 			}
-			if (strstr (get_the_content(), "map_center"))
+			if (strstr (get_the_content (), "map_center"))
 			{
 				$wide = strstr (substr (strstr (get_the_content (), "map_center"), 12, strlen (strstr (get_the_content (), "map_center")) - 12), ",", true);
 				$long = strstr (substr (strstr (strstr (get_the_content (), "map_center"), ","), 1, strlen (strstr (strstr (get_the_content (), "map_center"), ",")) - 1), '"', true);
@@ -223,8 +223,8 @@
 				_e ("Choose a diapason");
 				echo "</p>
 				<form action='".site_url()."/wp-admin/admin-ajax.php' method='POST' id='diapason_form'>
-				<input type='range' name='diapason' id='diapason' min='0' max='10'>
-				<span id='range_value'>5</span>&nbsp;";
+				<input type='range' name='diapason' id='diapason' min='0' max='30'>
+				<span id='range_value'>15</span>&nbsp;";
 				_e ("km");
 				echo "<input type='hidden' name='current_id' value='".$post->ID."'/>
 				<input type='hidden' name='action' id='action' value='my_nearest'>
@@ -237,56 +237,52 @@
 				$wide = strstr (substr (strstr (get_the_content (null, null, $_POST ["current_id"]), "map_center"), 12, strlen (strstr (get_the_content (null, null, $_POST ["current_id"]), "map_center")) - 12), ",", true);
 				$long = strstr (substr (strstr (strstr (get_the_content (null, null, $_POST ["current_id"]), "map_center"), ","), 1, strlen (strstr (strstr (get_the_content (null, null, $_POST ["current_id"]), "map_center"), ",")) - 1), '"', true);
 				$my_query = new WP_Query ($args);
-				usort
-				(
-					$my_query->posts,
-					function ($post1, $post2) use ($wide, $long)
+				$content_only = array ();
+				if ($my_query->have_posts ())
+				{
+					while ($my_query->have_posts ())
 					{
-						if ((strstr ($post1->post_content, "map_center")) && (strstr ($post2->post_content, "map_center")))
+						$my_query->the_post ();
+						if (strstr ($my_query->post->post_content, "map_center"))
+							$content_only [$my_query->post->ID] = $my_query->post->post_content;
+					}
+					uasort
+					(
+						$content_only,
+						function ($content1, $content2) use ($wide, $long)
 						{
-							$wide_near1 = strstr (substr (strstr ($post1->post_content, "map_center"), 12, strlen (strstr ($post1->post_content, "map_center")) - 12), ",", true);
-							$long_near1 = strstr (substr (strstr (strstr ($post1->post_content, "map_center"), ","), 1, strlen (strstr (strstr ($post1->post_content, "map_center"), ",")) - 1), '"', true);	
+							$wide_near1 = strstr (substr (strstr ($content1, "map_center"), 12, strlen (strstr ($content1, "map_center")) - 12), ",", true);
+							$long_near1 = strstr (substr (strstr (strstr ($content1, "map_center"), ","), 1, strlen (strstr (strstr ($content1, "map_center"), ",")) - 1), '"', true);	
 							$is_near1 = 12742000 * asin (sqrt (pow (sin (($wide_near1 - $wide) * pi () / 360), 2) + cos ($wide_near1 * pi () / 180) * cos ($wide * pi () / 180) * pow (sin (($long_near1 - $long) * pi () / 360), 2)));
-							$wide_near2 = strstr (substr (strstr ($post2->post_content, "map_center"), 12, strlen (strstr ($post2->post_content, "map_center")) - 12), ",", true);
-							$long_near2 = strstr (substr (strstr (strstr ($post2->post_content, "map_center"), ","), 1, strlen (strstr (strstr ($post2->post_content, "map_center"), ",")) - 1), '"', true);	
-							$is_near2 = 12742000 * asin (sqrt (pow (sin (($wide_near1 - $wide) * pi () / 360), 2) + cos ($wide_near1 * pi () / 180) * cos ($wide * pi () / 180) * pow (sin (($long_near1 - $long) * pi () / 360), 2)));
+							$wide_near2 = strstr (substr (strstr ($content2, "map_center"), 12, strlen (strstr ($content2, "map_center")) - 12), ",", true);
+							$long_near2 = strstr (substr (strstr (strstr ($content2, "map_center"), ","), 1, strlen (strstr (strstr ($content2, "map_center"), ",")) - 1), '"', true);	
+							$is_near2 = 12742000 * asin (sqrt (pow (sin (($wide_near2 - $wide) * pi () / 360), 2) + cos ($wide_near2 * pi () / 180) * cos ($wide * pi () / 180) * pow (sin (($long_near2 - $long) * pi () / 360), 2)));
 							if ($is_near1 == $is_near2)
-								return -1;
-							if ($is_near > $is_near2)
 								return 0;
-							if ($is_near < $is_near2)
+							if ($is_near1 > $is_near2)
+								return 1;
+							if ($is_near1 < $is_near2)
 								return -1;
 						}
-					}						
-				);
-				//echo " mq: ";
-				//print_r ($my_query);
-				if ($my_query->have_posts())
-				{
-					$title = "";
-					$link = "";
-					while ($my_query->have_posts())
+					);
+					foreach ($content_only as $id => $content)
 					{
-						$my_query->the_post();;
-						if (strstr ($my_query->post->post_content, "map_center"))
+						$wide_near = strstr (substr (strstr ($content, "map_center"), 12, strlen (strstr ($content, "map_center")) - 12), ",", true);
+						$long_near = strstr (substr (strstr (strstr ($content, "map_center"), ","), 1, strlen (strstr (strstr ($post_content, "map_center"), ",")) - 1), '"', true);	
+						$distance_near = 12742 * asin (sqrt (pow (sin (($wide_near - $wide) * pi () / 360), 2) + cos ($wide_near * pi () / 180) * cos ($wide * pi () / 180) * pow (sin (($long_near - $long) * pi () / 360), 2)));
+						if ($distance_near <= 15)
 						{
-							$wide_near = strstr (substr (strstr ($my_query->post->post_content, "map_center"), 12, strlen (strstr ($my_query->post->post_content, "map_center")) - 12), ",", true);
-							$long_near = strstr (substr (strstr (strstr ($my_query->post->post_content, "map_center"), ","), 1, strlen (strstr (strstr ($my_query->post->post_content, "map_center"), ",")) - 1), '"', true);	
-							$distance_near = 12742 * asin (sqrt (pow (sin (($wide_near - $wide) * pi () / 360), 2) + cos ($wide_near * pi () / 180) * cos ($wide * pi () / 180) * pow (sin (($long_near - $long) * pi () / 360), 2)));
-							if ($distance_near <= 5)
-							{
-								$title = $my_query->post->post_title;
-								$link = get_permalink ($my_query->post->ID);
-								echo "<a href = '".$link."'>".$title."</a> - ".$distance_near."&nbsp;";
-								_e ("km");
-								echo "<br/>";
-								wp_reset_postdata ();
-							}
+							$title = get_the_title ($id);
+							$link = get_permalink ($id);
+							echo "<a href = '".$link."'>".$title."</a> - ".round ($distance_near, 1)."&nbsp;";
+							_e ("km");
+							echo "<br/>";
 						}
 					}
 				}
 				echo "</div>
 				</form>";
+				wp_reset_postdata();
 			}
 			$terms = get_the_terms ($post->ID, "city_object_taxonomy");
 			$args = array ();
@@ -297,25 +293,43 @@
 				if ($term->parent == get_term_by ("slug", "zviazuiuchi-taksonomii", "city_object_taxonomy")->term_id)
 					$args ["tax_query"][0]["terms"][] = $term->term_id;
 			$my_query = new WP_Query ($args);
-			if ($my_query->have_posts())
+			if ($my_query->have_posts ())
 			{
 				echo "<h3>";
 				echo _e ("Connected Posts");
 				echo "</h3>";
-				while ($my_query->have_posts())
+				while ($my_query->have_posts ())
 				{
-					$my_query->the_post();
+					$my_query->the_post ();
 					echo "<a href = '".get_permalink ($my_query->post->ID)."'>".$my_query->post->post_title."</a>";
 				}
 				wp_reset_postdata ();
 			}
-			if ((!is_object_in_term ($post->ID, "city_object_taxonomy", "dokument")) && (!is_object_in_term ($post->ID, "city_object_taxonomy", "liudyna")))
+			$children_document = false;
+			$term_document = get_term_by ("slug", "dokument", "city_object_taxonomy");
+			$term_children = get_term_children ($term_document->term_id, "city_object_taxonomy");
+			foreach ($term_children as $term_child)
+				if (is_object_in_term ($post->ID, "city_object_taxonomy", $term_child))
+				{
+					$children_document = true;
+					break;
+				}
+			$children_people = false;
+			$term_people = get_term_by ("slug", "liudyna", "city_object_taxonomy");
+			$term_children = get_term_children ($term_people->term_id, "city_object_taxonomy");
+			foreach ($term_children as $term_child)
+				if (is_object_in_term ($post->ID, "city_object_taxonomy", $term_child))
+				{
+					$children_people = true;
+					break;
+				}
+			if ((!is_object_in_term ($post->ID, "city_object_taxonomy", "dokument")) && (!$children_document) && (!is_object_in_term ($post->ID, "city_object_taxonomy", "liudyna")) && (!$children_people))
 			{
 				if (get_post_meta($post->ID, 'мапа', true) !== '')
 				{
 					echo "<h3>";
 					_e("Map");
-					echo "</h3><br/>";
+					echo "</h3>";
 					$iframe = get_field('мапа');
 
 					// Use preg_match to find iframe src.
@@ -342,76 +356,110 @@
 				{
 					echo "<h3>";
 					_e("Latitude");
-					echo "</h3><br/>".get_field('широта');
+					echo "</h3>".get_field('широта');
 				}			
 				if (get_post_meta($post->ID, 'довгота', true) !== '')
 				{
 					echo "<h3>";
 					_e("Longitude");
-					echo "</h3><br/>".get_field('довгота');
+					echo "</h3>".get_field('довгота');
 				}
 			}
-			if (is_object_in_term ($post->ID, "city_object_taxonomy", "liudyna"))
+			if ((is_object_in_term ($post->ID, "city_object_taxonomy", "liudyna")) || $children_people)
 			{				
 				if (get_post_meta($post->ID, 'дата_народження', true) !== '')
 				{
 					echo "<h3>";
 					_e("Birthday");
-					echo "</h3><br/>".get_field('дата_народження');
+					echo "</h3>".get_field('дата_народження');
 				}			
 				if (get_post_meta($post->ID, 'місце_народження', true) !== '')
 				{
 					echo "<h3>";
 					_e("Place of Birth");
-					echo "</h3><br/>".get_field('місце_народження');
+					echo "</h3>".get_field('місце_народження');
 				}		
 				if (get_post_meta($post->ID, 'дата_смерті', true) !== '')
 				{
 					echo "<h3>";
 					_e("Date of Die");
-					echo "</h3><br/>".get_field('дата_смерті');
+					echo "</h3>".get_field('дата_смерті');
 				}		
 				if (get_post_meta($post->ID, 'місце_смерті', true) !== '')
 				{
 					echo "<h3>";
 					_e("Place of Die");
-					echo "</h3><br/>".get_field('місце_смерті');
+					echo "</h3>".get_field('місце_смерті');
 				}
 			}
-			if (is_object_in_term ($post->ID, "city_object_taxonomy", "budynok"))
-			{				
+			$children_house = false;
+			$term_house = get_term_by ("slug", "budynok", "city_object_taxonomy");
+			$term_children = get_term_children ($term_house->term_id, "city_object_taxonomy");
+			foreach ($term_children as $term_child)
+				if (is_object_in_term ($post->ID, "city_object_taxonomy", $term_child))
+				{
+					$children_house = true;
+					break;
+				}
+			if ((is_object_in_term ($post->ID, "city_object_taxonomy", "budynok")) || $children_house)
+			{
 				if (get_post_meta($post->ID, 'адреса', true) !== '')
 				{
 					echo "<h3>";
 					_e("Address");
-					echo "</h3><br/>".get_field('адреса');
-				}			
+					echo "</h3>".get_field('адреса');
+				}
 				if (get_post_meta($post->ID, 'висота', true) !== '')
 				{
 					echo "<h3>";
 					_e("Height");
-					echo "</h3><br/>".get_field('висота');
-				}		
+					echo "</h3>".get_field('висота');
+				}
 			}
-			if (is_object_in_term ($post->ID, "city_object_taxonomy", "vnz"))
+			$children_street = false;
+			$term_street = get_term_by ("slug", "vulytsia", "city_object_taxonomy");
+			$term_children = get_term_children ($term_street->term_id, "city_object_taxonomy");
+			foreach ($term_children as $term_child)
+				if (is_object_in_term ($post->ID, "city_object_taxonomy", $term_child))
+				{
+					$children_street = true;
+					break;
+				}
+			if ((is_object_in_term ($post->ID, "city_object_taxonomy", "vulytsia")) || $children_street)
+				if (get_post_meta($post->ID, 'длина_вулиці', true) !== '')
+				{
+					echo "<h3>";
+					_e("Street long");
+					echo "</h3>".get_field('длина_вулиці');
+				}
+			$children_hight_school = false;
+			$term_hight_school = get_term_by ("slug", "vnz", "city_object_taxonomy");
+			$term_children = get_term_children ($term_hight_school->term_id, "city_object_taxonomy");
+			foreach ($term_children as $term_child)
+				if (is_object_in_term ($post->ID, "city_object_taxonomy", $term_child))
+				{
+					$children_hight_school = true;
+					break;
+				}
+			if ((is_object_in_term ($post->ID, "city_object_taxonomy", "vnz")) || $term_hight_school)
 			{				
 				if (get_post_meta($post->ID, 'список_факультетів', true) !== '')
 				{
 					echo "<h3>";
 					_e("Facultaty List");
-					echo "</h3><br/>".get_field('список_факультетів');
+					echo "</h3>".get_field('список_факультетів');
 				}			
 				if (get_post_meta($post->ID, 'рейтинг', true) !== '')
 				{
 					echo "<h3>";
 					_e("Rating");
-					echo "</h3><br/>".get_field('рейтинг');
+					echo "</h3>".get_field('рейтинг');
 				}		
 				if (get_post_meta($post->ID, 'список_ректорів', true) !== '')
 				{
 					echo "<h3>";
 					_e("Rectors' List");
-					echo "</h3><br/>".get_field('список_ректорів');
+					echo "</h3>".get_field('список_ректорів');
 				}
 			}
 			?>

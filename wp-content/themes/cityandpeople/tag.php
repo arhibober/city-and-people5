@@ -21,10 +21,8 @@
 
 
             <?php $args = array(
-						//'posts_per_page' => 4, // сколько похожих постов нужно вывести,
 						'post_type' => 'city_object',
 						'tag' => get_queried_object()->slug
-						//'post_status' => 'public'
 					);
 					$my_query = new WP_Query( $args );
 					if ($my_query->have_posts()) {

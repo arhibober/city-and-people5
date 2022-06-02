@@ -11,9 +11,6 @@ class Gutenberg_Template_To_Single_Post
             array('core/heading', array(
                 'placeholder' => 'Add subtitle...',
             )),
-            array('core/image', array(
-                /* 'align' => 'left',*/
-            )),
             array('core/paragraph', array(
                 'placeholder' => 'Add description...',
             )),

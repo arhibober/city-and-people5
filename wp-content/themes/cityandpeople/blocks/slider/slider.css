@@ -7,7 +7,7 @@
   width: 100vh;
   padding: 2vh;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .slider.is-admin:before {

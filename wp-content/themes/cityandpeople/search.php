@@ -34,19 +34,15 @@
             <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
                     <?php previous_posts_link(__("&larr; Older"));?>
-                    <!-- <a class="page-link" href="#">&larr; Older</a> -->
                 </li>
                 <li class="page-item">
                     <?php next_posts_link(__("Newer &rarr;"));?>
-                    <!-- <a class="page-link" href="#">Newer &rarr;</a> -->
                 </li>
             </ul>
         </div>
         <?php get_sidebar();?>
-        <!-- /.row -->
 
     </div>
-    <!-- /.container -->
 
 </div>
 <?php get_footer();?>

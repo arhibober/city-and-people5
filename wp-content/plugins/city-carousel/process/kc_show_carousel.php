@@ -2,19 +2,10 @@
  
 function kc_show_carousel($content)
 {
-	//echo "uuu";
 	$args = [
-        //'category_name' => get_option('kc_category_name'),
-        //'post_type' => 'post',
         'post_type' => get_option('kc_post_type') ? get_option('kc_post_type') : 'post',
-        //'post_type' => 'recipe',
-        // 'post_type' => 'movies',
         'tag_in' => get_option('kc_tag'),
         'showposts' => get_option('kc_count'),
-        //'category_name' => 'cooking',
-        //'post_type' => 'recipe',
-        // 'post_type' => 'movies',
-        //'tag' => 'cooking',
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
@@ -25,12 +16,7 @@ function kc_show_carousel($content)
 		$args ["tax_query"][0]["taxonomy"] = "city_object_taxonomy";
 		$args ["tax_query"][0]["terms"] = get_option('kc_category_name');
 	}
- 
-	//echo " a: ";
-	//print_r ($args);
     $query = new WP_Query($args);
-	//echo " q: ";
-	//print_r ($query);
     $html = '';
     if ($query->have_posts()) {
         $html = '<section id="demos">
@@ -49,7 +35,5 @@ function kc_show_carousel($content)
 	</section>';
     }
 	wp_reset_postdata();
-	
-	//echo $content . $html;
     return $content . $html;
 }
