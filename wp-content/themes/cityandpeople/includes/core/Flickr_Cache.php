@@ -8,9 +8,9 @@ class Flickr_cache
     public function get_User_ID()
     {
         $transient_key = 'Flickr User ID';
-        if (!$data = get_transient($transient_key)) {
+        if (!$data = get_transient( $transient_key )) {
             $data = $this->get_data_User_ID();
-            set_transient($transient_key, $data, 120);
+            set_transient( $transient_key, $data, 120 );
         }
         return $data;
     }
@@ -25,9 +25,9 @@ class Flickr_cache
     public function get_APi_Key()
     {
         $transient_key = 'Flickr API Key';
-        if (!$data = get_transient($transient_key)) {
+        if (!$data = get_transient( $transient_key )) {
             $data = $this->get_data_API_key();
-            set_transient($transient_key, $data, 120);
+            set_transient( $transient_key, $data, 120 );
         }
         return $data;
     }
@@ -42,9 +42,9 @@ class Flickr_cache
     public function get_APi_Secret()
     {
         $transient_key = 'Flickr API Secret';
-        if (!$data = get_transient($transient_key)) {
+        if (!$data = get_transient( $transient_key )) {
             $data = $this->get_data_API_secret();
-            set_transient($transient_key, $data, 120);
+            set_transient( $transient_key, $data, 120 );
         }
         return $data;
     }

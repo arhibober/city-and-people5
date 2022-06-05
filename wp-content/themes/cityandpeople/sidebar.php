@@ -1,9 +1,8 @@
 <!-- Sidebar Widgets Column -->
-<div class="col-md-4">
-    <?php //get_search_form();?>
+<div class='col-md-4'>
     <?php
-if (is_active_sidebar('cityandpeople_sidebar')) {
-    dynamic_sidebar('cityandpeople_sidebar');
-}
-?>
+    if (is_active_sidebar( 'cityandpeople_sidebar' )) {
+        dynamic_sidebar( 'cityandpeople_sidebar' );
+    }
+    ?>
 </div>

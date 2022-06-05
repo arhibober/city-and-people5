@@ -1,7 +1,6 @@
 <!-- Comments Form -->
-<div class="card my-4">
-    <!-- <h5 class="card-header">Leave a Comment:</h5> -->
-    <div class="card-body">
+<div class='card my-4'>
+    <div class='card-body'>
         <?php
 comment_form([
     'comment_field' => '<div class="form-group">
@@ -10,23 +9,23 @@ comment_form([
     'fields' => [
         'author' =>
         '<div class="col col-sm-4">
-            <label>' . __('Name', 'cityandpeople') . '</label>
+            <label>' . __( 'Name', 'cityandpeople' ) . '</label>
             <input type="text" name="author" class="form-control" />
         </div>',
         'email' =>
         '<div class="col col-sm-4">
-            <label>' . __('Email', 'cityandpeople') . '</label>
+            <label>' . __( 'Email', 'cityandpeople' ) . '</label>
             <input type="text" name="email" class="form-control" />
         </div>',
         'url' =>
         '<div class="col col-sm-4">
-            <label>' . __('Website', 'cityandpeople') . '</label>
+            <label>' . __( 'Website', 'cityandpeople' ) . '</label>
             <input type="text" name="url" class="form-control" />
         </div>',
     ],
     'class_submit' => 'btn btn-primary',
-    'label_submit' => __('Submit Comment', 'cityandpeople'),
-    'title_reply' => __('<h5 class="card-header">Leave a Comment</span>:', 'cityandpeople'),
+    'label_submit' => __( 'Submit Comment', 'cityandpeople' ),
+    'title_reply' => __( '<h5 class="card-header">Leave a Comment</span>:', 'cityandpeople' ),
 ]
 );
 ?>
@@ -36,10 +35,10 @@ comment_form([
 <!-- Comments List -->
 
 <?php
-if (have_comments()) {
+if ( have_comments() ) {
     ?>
-<h5 class="comments-title"><span><?php _e("Comments"); ?></span></h5>
-<!-- <h5 class="comments-title"><span><?php comments_number();?></span></h5> -->
+<h5 class='comments-title'><span><?php _e( 'Comments' ); ?></span></h5>
+<?php comments_number();?>
 
 <!-- Comments List
         ============================================= -->
@@ -47,22 +46,22 @@ if (have_comments()) {
 
 <?php
 
-    foreach ($comments as $comment) {
+    foreach( $comments as $comment ) {
         ?>
-<div class="media mb-4">
-    <div class="comment-meta">
-        <div class="comment-author vcard">
-            <span class="comment-avatar clearfix">
-                <?php echo get_avatar($comment, 60, '', '', ['class' => 'd-flex mr-3 rounded-circle']); ?>
+<div class='media mb-4'>
+    <div class='comment-meta'>
+        <div class='comment-author vcard'>
+            <span class='comment-avatar clearfix'>
+                <?php echo get_avatar( $comment, 60, '', '', ['class' => 'd-flex mr-3 rounded-circle'] ); ?>
             </span>
         </div>
     </div>
-    <div class="comment-content clearfix">
-        <div class="comment-author">
+    <div class='comment-content clearfix'>
+        <div class='comment-author'>
             <?php comment_author();?>
             <span><?php comment_date();?></span>
         </div>
-        <div class="media-body">
+        <div class='media-body'>
             <?php comment_text();?>
         </div>
     </div>

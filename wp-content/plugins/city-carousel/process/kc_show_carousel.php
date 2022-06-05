@@ -1,22 +1,22 @@
 <?php
  
-function kc_show_carousel($content)
+function kc_show_carousel( $content )
 {
 	$args = [
-        'post_type' => get_option('kc_post_type') ? get_option('kc_post_type') : 'post',
-        'tag_in' => get_option('kc_tag'),
-        'showposts' => get_option('kc_count'),
+        'post_type' => get_option( 'kc_post_type' ) ? get_option( 'kc_post_type' ) : 'post',
+        'tag_in' => get_option( 'kc_tag' ),
+        'showposts' => get_option( 'kc_count' ),
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
     ];
-	if (get_option('kc_category_name') != false)
+	if (false != get_option( 'kc_category_name' ))
 	{
-		$args ["tax_query"][0]["field"] = "name";
-		$args ["tax_query"][0]["taxonomy"] = "city_object_taxonomy";
-		$args ["tax_query"][0]["terms"] = get_option('kc_category_name');
+		$args ['tax_query'][0]['field'] = 'name';
+		$args ['tax_query'][0]['taxonomy'] = 'city_object_taxonomy';
+		$args ['tax_query'][0]['terms'] = get_option( 'kc_category_name' );
 	}
-    $query = new WP_Query($args);
+    $query = new WP_Query( $args );
     $html = '';
     if ($query->have_posts()) {
         $html = '<section id="demos">
@@ -25,8 +25,8 @@ function kc_show_carousel($content)
             <div class="owl-carousel owl-theme">';
         while ($query->have_posts()) {
             $query->the_post();
-            $html .= '<div class="item" style="background:url(' . get_the_post_thumbnail_url($query->post->ID, 'thumbnail') . ') #80808052 center;background-size:cover;"><h5>';
-            $html .= '<a href="' . get_permalink($query->post->ID) . '">' . $query->post->post_title . '</a>';
+            $html .= '<div class="item" style="background:url(' . get_the_post_thumbnail_url( $query->post->ID, 'thumbnail' ) . ') #80808052 center;background-size:cover;"><h5>';
+            $html .= '<a href="' . get_permalink( $query->post->ID ) . '">' . $query->post->post_title . '</a>';
             $html .= '</h5></div>';
         }
         $html .= ' </div>

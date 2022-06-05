@@ -40,19 +40,19 @@ class Filter_dates
 			}		
 		$args['post_type'] = "city_object";
 		$taxonomies = "";
-		if (count ($_POST ["taxonomies"]) > 0)
+		if( count( $_POST["taxonomies"] ) > 0 )
 			$args ["tax_query"][0]["taxonomy"] = "city_object_taxonomy";
-		foreach ($_POST ["taxonomies"] as $taxonomy)
+		foreach( $_POST["taxonomies"] as $taxonomy )
 			$args ["tax_query"][0]["terms"][] = $taxonomy;
 		$query = new WP_Query( $args );		
-		if ($query->have_posts()) {
-			while ($query->have_posts()) {
+		if( $query->have_posts() ) {
+			while( $query->have_posts() ) {
 				$query->the_post();
-				get_template_part('partials/posts/content', 'excerpt');
+				get_template_part( 'partials/posts/content', 'excerpt' );
 			}
 		}
 		else {
-			get_template_part('partials/posts/content', 'none');
+			get_template_part( 'partials/posts/content', 'none' );
 		}
 		die();
 	}

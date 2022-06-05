@@ -17,16 +17,16 @@ class Hierarchical
 	
 	public static function child_list ($taxonomies)
 	{
-		if (count ($taxonomies) > 0)
+		if ( count ($taxonomies) > 0 )
 			echo "<ul>";
-		foreach ($taxonomies as $taxonomy)
+		foreach ( $taxonomies as $taxonomy )
 		{
 			echo "<li>
 				<input type='checkbox' name='taxonomies[]' value='".$taxonomy->term_id."'/>".$taxonomy->name;
-			self::child_list ($taxonomy->children);
+			self::child_list ( $taxonomy->children );
 			echo "</li>";
 		}
-		if (count ($taxonomies) > 0)
+		if (count ( $taxonomies ) > 0)
 			echo "</ul>";
 	}
 }
