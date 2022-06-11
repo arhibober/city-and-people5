@@ -20,17 +20,17 @@ if ($is_preview) {
 
 ?>
 <div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr($className); ?>">
-    <?php if (have_rows('slides')): ?>
+    <?php if (have_rows('slides')) : ?>
     <div class="slides">
-        <?php while (have_rows('slides')): the_row();
-    $image = get_sub_field('image');
-    ?>
-	        <div>
-	            <?php echo wp_get_attachment_image($image['id'], 'full'); ?>
-	        </div>
-	        <?php endwhile;?>
+        <?php while (have_rows('slides')) : the_row();
+                $image = get_sub_field('image');
+            ?>
+        <div>
+            <?php echo wp_get_attachment_image($image['id'], 'full'); ?>
+        </div>
+        <?php endwhile; ?>
     </div>
-    <?php else: ?>
+    <?php else : ?>
     <p><?php _e("Please add some slides."); ?></p>
-    <?php endif;?>
+    <?php endif; ?>
 </div>

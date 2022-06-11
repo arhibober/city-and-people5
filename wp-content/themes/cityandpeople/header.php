@@ -8,8 +8,8 @@
     <meta name='description' content=''>
     <meta name='author' content=''>
 
-    <title><?php bloginfo( 'name' ); ?> - <?php bloginfo( 'description' ); ?></title>
-    <?php wp_head();?>
+    <title><?php bloginfo('name'); ?> - <?php bloginfo('description'); ?></title>
+    <?php wp_head(); ?>
 
 </head>
 
@@ -18,7 +18,7 @@
     <!-- Navigation -->
     <nav class='navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top'>
         <div class='container'>
-            <a class='navbar-brand' href='<?php echo get_home_url(); ?>'><?php bloginfo( 'name' ); ?></a>
+            <a class='navbar-brand' href='<?php echo get_home_url(); ?>'><?php bloginfo('name'); ?></a>
             <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse'
                 data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false'
                 aria-label='Toggle navigation'>
@@ -26,25 +26,25 @@
             </button>
             <div class='collapse navbar-collapse' id='navbarResponsive'>
                 <?php
-if (has_nav_menu( 'primary' )) {
-    wp_nav_menu( [
-        'theme_location' => 'primary',
-        'depth' => 3,
-        'container' => false,
-        'menu_class' => 'navbar-nav ml-auto',
-        'fallback_cb' => false,
+                if (has_nav_menu('primary')) {
+                    wp_nav_menu([
+                        'theme_location' => 'primary',
+                        'depth' => 3,
+                        'container' => false,
+                        'menu_class' => 'navbar-nav ml-auto',
+                        'fallback_cb' => false,
 
-        'walker' => new Cityandpeople_Nav_Walker(),
-    ] );
-}
-?>
+                        'walker' => new Cityandpeople_Nav_Walker(),
+                    ]);
+                }
+                ?>
 
             </div>
         </div>
     </nav>
 
     <header>
-        <?php if( is_front_page() ) {?>
+        <?php if (is_front_page()) { ?>
         <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
             <ol class='carousel-indicators'>
                 <li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>
@@ -55,7 +55,7 @@ if (has_nav_menu( 'primary' )) {
                 <!-- Slide One - Set the background image for this slide in the line below -->
 
                 <div class='carousel-item active'>
-                    <img src='<?php bloginfo('template_directory')?>/assets/images/slide1.jpg' class='d-block w-100'
+                    <img src='<?php bloginfo('template_directory') ?>/assets/images/slide1.jpg' class='d-block w-100'
                         alt='...' />
                     <div class="carousel-caption d-none d-md-block">
                         <h3>First Slide</h3>
@@ -65,7 +65,7 @@ if (has_nav_menu( 'primary' )) {
                 <!-- Slide Two - Set the background image for this slide in the line below -->
 
                 <div class='carousel-item'>
-                    <img src='<?php bloginfo('template_directory')?>/assets/images/slide2.jpg' class='d-block w-100'
+                    <img src='<?php bloginfo('template_directory') ?>/assets/images/slide2.jpg' class='d-block w-100'
                         alt='...' />
                     <div class='carousel-caption d-none d-md-block'>
                         <h3>Second Slide</h3>
@@ -75,7 +75,7 @@ if (has_nav_menu( 'primary' )) {
                 <!-- Slide Three - Set the background image for this slide in the line below -->
 
                 <div class='carousel-item'>
-                    <img src='<?php bloginfo('template_directory')?>/assets/images/slide3.jpg' class='d-block w-100'
+                    <img src='<?php bloginfo('template_directory') ?>/assets/images/slide3.jpg' class='d-block w-100'
                         alt='...' />
                     <div class='carousel-caption d-none d-md-block'>
                         <h3>Third Slide</h3>
@@ -92,5 +92,5 @@ if (has_nav_menu( 'primary' )) {
                 <span class='sr-only'>Next</span>
             </a>
         </div>
-        <?php }?>
+        <?php } ?>
     </header>

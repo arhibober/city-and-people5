@@ -4,15 +4,15 @@
  * Template post type: page, high-school
  */
 
-get_header( 'v2' );?>
+get_header('v2'); ?>
 <div class='container'>
     <div class='row'>
         <div class='col-md-12'>
             <!-- Title -->
             <h1 class='mt-4 mb-3'>
-                <?php the_title();?>
+                <?php the_title(); ?>
             </h1>
-            <span><?php the_archive_description();?></span>
+            <span><?php the_archive_description(); ?></span>
         </div>
     </div>
 </div>
@@ -24,58 +24,58 @@ get_header( 'v2' );?>
         <!-- Blog Entries Column -->
         <div class='col-md-8'>
             <?php
-$args = array(
-    'post_type' => 'high-school',
-    'meta_key' => 'rating',
-    'meta_value' => '4-5',
-    'orderby' => 'meta_value',
-    'order' => 'ASC',
-);
+            $args = array(
+                'post_type' => 'high-school',
+                'meta_key' => 'rating',
+                'meta_value' => '4-5',
+                'orderby' => 'meta_value',
+                'order' => 'ASC',
+            );
 
-$the_query = new WP_Query( $args );
-global $wpdb;
+            $the_query = new WP_Query($args);
+            global $wpdb;
 
-if ($the_query->have_posts()) {
-    while($the_query->have_posts()) {
-        $meta_values = $wpdb->get_results( "SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key LIKE 'year'", OBJECT );
-        print_r( $meta_values );
-        print_r( $the_query->get_post_meta( $post->ID, 'year', true ) );
-        $the_query->the_post();
+            if ($the_query->have_posts()) {
+                while ($the_query->have_posts()) {
+                    $meta_values = $wpdb->get_results("SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key LIKE 'year'", OBJECT);
+                    print_r($meta_values);
+                    print_r($the_query->get_post_meta($post->ID, 'year', true));
+                    $the_query->the_post();
 
-        get_template_part( 'partials/posts/content', 'excerpt' );
-    }
-} else {
-    get_template_part( 'partials/posts/content', 'none' );
-}
-wp_reset_postdata();
-?>
+                    get_template_part('partials/posts/content', 'excerpt');
+                }
+            } else {
+                get_template_part('partials/posts/content', 'none');
+            }
+            wp_reset_postdata();
+            ?>
 
 
             <!-- Pagination -->
             <ul class='pagination justify-content-center mb-4'>
                 <li class='page-item'>
-                    <?php previous_posts_link( '&larr; Older' );?>
+                    <?php previous_posts_link('&larr; Older'); ?>
                 </li>
                 <li class='page-item'>
-                    <?php next_posts_link( 'Newer &rarr;' );?>
+                    <?php next_posts_link('Newer &rarr;'); ?>
                 </li>
             </ul>
 
 
         </div>
-        <?php get_sidebar();?>
+        <?php get_sidebar(); ?>
     </div>
 </div>
 
 <div class='filter-custom-field'>
     <?php
-global $wpdb;
-$meta_values = $wpdb->get_results( "SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key LIKE 'year'", OBJECT );
-foreach( $meta_values as $meta_value ): ?>
+    global $wpdb;
+    $meta_values = $wpdb->get_results("SELECT DISTINCT meta_value FROM $wpdb->postmeta WHERE meta_key LIKE 'year'", OBJECT);
+    foreach ($meta_values as $meta_value) : ?>
     <a href="?year=1805">
-        <?php echo esc_html( $meta_value->meta_value ); ?>
+        <?php echo esc_html($meta_value->meta_value); ?>
     </a>
-    <?php endforeach;?>
+    <?php endforeach; ?>
 </div>
 
-<?php get_footer();?>
+<?php get_footer(); ?>
