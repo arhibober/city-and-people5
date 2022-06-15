@@ -184,14 +184,16 @@
     <ul class='object-gallery'>
         <?php foreach ($images as $image) : ?>
         <li>
-            <a href='<?php echo $image['url']; ?>" alt="<?php echo get_post_meta($image['ID'], '_wp_attachment_image_alt')[0]; ?>" title="<?php echo get_the_excerpt($image['ID']) ?>">
-								<?php echo wp_get_attachment_image($image['ID'], $size) ?>
-							</a><br/>
-								<div><?php echo get_the_content(NULL, NULL, $image['ID']) ?></div>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			<?php endif;
+            <a href='<?php echo $image['url']; ?>'
+                alt='<?php echo get_post_meta($image['ID'], '_wp_attachment_image_alt')[0]; ?>'
+                title='<?php echo get_the_excerpt($image['ID']) ?>'>
+                <?php echo wp_get_attachment_image($image['ID'], $size) ?>
+            </a><br />
+            <div><?php echo get_the_content(NULL, NULL, $image['ID']) ?></div>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif;
 		if (get_post_meta($post->ID, 'виноски', true) !== '') {
 			echo '<h3>';
 			_e('Footnotes');
@@ -353,6 +355,29 @@
 			}
 		}
 		if ((is_object_in_term($post->ID, 'city_object_taxonomy', 'liudyna')) || $children_people) {
+			if (get_post_meta($post->ID, 'стать', true) !== '') {
+				echo '<h3>';
+				_e('Sex');
+				echo '</h3>' . get_field('стать');
+			}
+			if (get_post_meta($post->ID, 'батько', true) !== '') {
+				$father_id = get_field('батько', false, false);
+				echo '<h3>';
+				_e('Father');
+				echo '</h3><a href=' . get_the_permalink($father_id) . "'>" . get_the_title($father_id) . "</a>";
+			}
+			if (get_post_meta($post->ID, 'мати', true) !== '') {
+				$mother_id = get_field('мати', false, false);
+				echo '<h3>';
+				_e('Mother');
+				echo '</h3><a href=' . get_the_permalink($mother_id) . "'>" . get_the_title($mother_id) . "</a>";
+			}
+			if (get_post_meta($post->ID, 'чоловікжінка', true) !== '') {
+				$spouse_id = get_field('чоловікжінка', false, false);
+				echo '<h3>';
+				_e('Spouse');
+				echo '</h3><a href=' . get_the_permalink($spouse_id) . "'>" . get_the_title($spouse_id) . "</a>";
+			}
 			if (get_post_meta($post->ID, 'дата_народження', true) !== '') {
 				echo '<h3>';
 				_e('Birthday');
@@ -444,9 +469,9 @@
 		}
 			?>
 
-            <!-- Post Single - Author End -->
+    <!-- Post Single - Author End -->
 
-            <?php
+    <?php
 
 			if (comments_open() || get_comments_number()) {
 				comments_template();
