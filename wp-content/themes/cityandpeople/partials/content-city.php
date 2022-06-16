@@ -467,15 +467,15 @@
 				echo '</h3>' . get_field('список_ректорів');
 			}
 		}
-			?>
+		?>
 
     <!-- Post Single - Author End -->
 
     <?php
 
-			if (comments_open() || get_comments_number()) {
-				comments_template();
-			}
+		if (comments_open() || get_comments_number()) {
+			comments_template();
 		}
-			?>
+	}
+	?>
 </div>

@@ -128,13 +128,11 @@ div.h-100.card {
   margin-bottom: 0;
 }
 
-
 div.container-archive {
   margin-top: 20px;
 }
 
-@media only screen and (max-width: 991px)
-{
+@media only screen and (max-width: 991px) {
   div.container-archive {
     margin-top: 50px;
   }
