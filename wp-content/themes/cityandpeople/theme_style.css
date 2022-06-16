@@ -127,3 +127,15 @@ div.h-100.card {
 .col-md-8 h3 {
   margin-bottom: 0;
 }
+
+
+div.container-archive {
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 991px)
+{
+  div.container-archive {
+    margin-top: 50px;
+  }
+}
