@@ -51,17 +51,6 @@ get_header('v2'); ?>
             ?>
 
 
-            <!-- Pagination -->
-            <ul class='pagination justify-content-center mb-4'>
-                <li class='page-item'>
-                    <?php previous_posts_link('&larr; Older'); ?>
-                </li>
-                <li class='page-item'>
-                    <?php next_posts_link('Newer &rarr;'); ?>
-                </li>
-            </ul>
-
-
         </div>
         <?php get_sidebar(); ?>
     </div>

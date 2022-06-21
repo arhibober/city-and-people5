@@ -75,12 +75,12 @@
 
 		// массив параметров для WP_Query
 		$args = array(
-			//'posts_per_page' => 4, // сколько похожих постов нужно вывести,
+			'posts_per_page' => -1, // сколько похожих постов нужно вывести,
 			'tax_query' => array(
 				array(
 					'taxonomy' => $related_tax,
 					'field' => 'id',
-					'include_children' => false, // нужно ли включать посты дочерних рубрик
+					'include_children' => true, // нужно ли включать посты дочерних рубрик
 					'terms' => $cats_tags_or_taxes,
 					'operator' => 'IN', // если пост принадлежит хотя бы одной рубрике текущего поста, он будет отображаться в похожих записях, укажите значение AND и тогда похожие посты будут только те, которые принадлежат каждой рубрике текущего поста
 					'post__not_in' => array($post->ID)
@@ -130,6 +130,7 @@
 		// не забудьте про эту функцию, её отсутствие может повлиять на другие циклы на странице
 		wp_reset_postdata();
 		$args = array(
+			'posts_per_page' => -1,
 			'post_type'  => 'city_object',
 			'meta_query' => array(
 				array(
@@ -228,7 +229,8 @@
 				<div id='nearest'>";
 			$args = array(
 				'post_type' => 'city_object',
-				'post__not_in' => array($post->ID)
+				'post__not_in' => array($post->ID),
+				'posts_per_page' => -1
 			);
 			$wide = strstr(substr(strstr(get_the_content(null, null, $post->ID), 'map_center'), 12, strlen(strstr(get_the_content(null, null, $post->ID), 'map_center')) - 12), ',', true);
 			$long = strstr(substr(strstr(strstr(get_the_content(null, null, $post->ID), 'map_center'), ','), 1, strlen(strstr(strstr(get_the_content(null, null, $post->ID), 'map_center'), ',')) - 1), '"', true);
@@ -282,6 +284,7 @@
 		$args['post_type'] = 'city_object';
 		$args['tax_query'][0]['taxonomy'] = 'city_object_taxonomy';
 		$args['post__not_in'] = array($post->ID);
+		$args['posts_per_page'] = -1;
 		foreach ($terms as $term) {
 			if ($term->parent == get_term_by('slug', 'zviazuiuchi-taksonomii', 'city_object_taxonomy')->term_id) {
 				$args['tax_query'][0]['terms'][] = $term->term_id;

@@ -43,7 +43,6 @@ get_header('v2'); ?>
             <hr>
 
             <!-- Preview Image -->
-            <!-- <img class="img-fluid rounded" src="http://placehold.it/900x300" alt=""> -->
             <?php
 				if (has_post_thumbnail()) {
 					the_post_thumbnail('full', ['class' => 'card-img-top']);
@@ -85,8 +84,11 @@ get_header('v2'); ?>
 			}
 			?>
             <div id='object_archive' class='row'>
-                <?php $args = array(
+                <?php echo " gqvp: " . get_query_var('paged');
+				$args = array(
 					'post_type' => 'city_object',
+					'posts_per_page' => get_option('posts_per_page'),
+					'paged' => get_query_var('page'),
 				);
 				$my_query = new WP_Query($args);
 				if ($my_query->have_posts()) {
@@ -97,17 +99,13 @@ get_header('v2'); ?>
 				} else {
 					get_template_part('partials/posts/content', 'none');
 				}
+				echo paginate_links([
+					'base'    => get_site_url() . '/page/%#%',
+					'current' => max(1, get_query_var('page')),
+					'total'   => $my_query->max_num_pages,
+					'before_page_number' => '&nbsp;',
+				]);
 				?>
-
-                <!-- Pagination -->
-                <ul class='pagination justify-content-center mb-4'>
-                    <li class='page-item'>
-                        <?php previous_posts_link('&larr; Older'); ?>
-                    </li>
-                    <li class='page-item'>
-                        <?php next_posts_link('Newer &rarr;'); ?>
-                    </li>
-                </ul>
             </div>
             <form action='<?php echo site_url() ?>/wp-admin/admin-ajax.php' method='POST' id='filter'>
                 <input type='date' name='old_date' placeholder='<?php _e('The oldest date'); ?>' />
@@ -128,8 +126,6 @@ get_header('v2'); ?>
 				]);
 				$tax_hierarchies = array();
 				Hierarchical::sort_terms_hierarchicaly($taxonomies, $tax_hierarchies);
-
-				//print_r( $tax_hierarchies );
 				echo '<h4>';
 				_e('Object categories:');
 				echo '</h4>
@@ -141,9 +137,7 @@ get_header('v2'); ?>
             </form>
         </div>
         <?php get_sidebar(); ?>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
 </div>
 
 <?php get_footer();

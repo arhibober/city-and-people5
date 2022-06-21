@@ -8,7 +8,8 @@ class My_nearest_objects
 	{
 		$args = array(
 			'post_type' => 'city_object',
-			'post__not_in' => array($_POST['current_id'])
+			'post__not_in' => array($_POST['current_id']),
+			'posts_per_page' => -1,
 		);
 		$wide = strstr(substr(strstr(get_the_content(null, null, $_POST['current_id']), 'map_center'), 12, strlen(strstr(get_the_content(null, null, $_POST['current_id']), 'map_center')) - 12), ',', true);
 		$long = strstr(substr(strstr(strstr(get_the_content(null, null, $_POST['current_id']), 'map_center'), ','), 1, strlen(strstr(strstr(get_the_content(null, null, $_POST['current_id']), 'map_center'), ',')) - 1), '"', true);

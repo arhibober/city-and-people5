@@ -36,8 +36,6 @@
 						'author_name' => get_the_author(),
 						'post_type' => array('post', 'city_object')
 					));
-					//echo " q: ";
-					//print_r ($query);
 					if ($query->have_posts()) {
 						while ($query->have_posts()) {
 							$query->the_post();
@@ -46,7 +44,14 @@
 					} else {
 						get_template_part('partials/posts/content', 'none');
 					}
+					echo paginate_links([
+						'base'    => get_site_url() . '/author/' . get_the_author() . '/?page=%#%',
+						'current' => max(1, get_query_var('page')),
+						'before_page_number' => '&nbsp;',
+						'total'   => $query->max_num_pages,
+					]);
 				} else {
+					global $wp_query;
 					if (have_posts()) {
 						while (have_posts()) {
 							the_post();
@@ -55,24 +60,15 @@
 					} else {
 						get_template_part('partials/posts/content', 'none');
 					}
+					echo paginate_links([
+						'before_page_number' => '&nbsp;'
+					]);
 				}
 				?>
-
-                <!-- Pagination -->
-                <ul class='pagination justify-content-center mb-4'>
-                    <li class='page-item'>
-                        <?php next_posts_link(__('&larr; Older')); ?>
-                    </li>
-                    <li class='page-item'>
-                        <?php previous_posts_link(__('Newer &rarr;')); ?>
-                    </li>
-                </ul>
             </div>
         </div>
         <?php get_sidebar(); ?>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
 </div>
 
 <?php get_footer(); ?>
