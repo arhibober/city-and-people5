@@ -84,7 +84,7 @@ get_header('v2'); ?>
 			}
 			?>
             <div id='object_archive' class='row'>
-                <?php echo " gqvp: " . get_query_var('paged');
+                <?php
 				$args = array(
 					'post_type' => 'city_object',
 					'posts_per_page' => get_option('posts_per_page'),
