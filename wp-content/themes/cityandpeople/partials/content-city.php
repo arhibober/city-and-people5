@@ -58,12 +58,12 @@
         <li class='page-item'>
             <?php next_post_link(); ?>
         </li>
-    </ul>
+    </ul><br />
     <?php
 		$date_symbol = substr(get_option('date_format'), 1, 2);
-		echo '<b>';
+		echo '<h3>';
 		_e('Key dates');
-		echo '</b>: ' . get_field('дата');
+		echo '</h3>' . get_field('дата');
 		// необязательно, но в некоторых случаях без этого не обойтись
 		global $post;
 
