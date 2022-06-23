@@ -13,32 +13,26 @@
 
     <!-- Marketing Icons Section -->
     <div class='row'>
-
-        <!-- Blog Entries Column -->
         <div class='col-md-8'>
-            <div class='card-header'><?php _e('What are you searhing for today?', 'bootkit'); ?></div>
-            <div class='card-body'>
-                <?php get_search_form(); ?>
+            <!-- Blog Entries Column -->
+            <div id="object_archive" class='row'>
+                <div class='card-header'><?php _e('What are you searhing for today?', 'bootkit'); ?></div>
+                <div class='card-body'>
+                    <?php get_search_form(); ?>
+                </div>
+                <?php if (have_posts()) {
+					while (have_posts()) {
+						the_post();
+						get_template_part('partials/posts/content', 'excerpt');
+					}
+				} else {
+					get_template_part('partials/posts/content', 'none');
+				}
+				echo paginate_links([
+					'before_page_number' => '&nbsp;'
+				]);
+				?>
             </div>
-            <?php if (have_posts()) {
-                while (have_posts()) {
-                    the_post();
-                    get_template_part('partials/posts/content', 'excerpt');
-                }
-            } else {
-                get_template_part('partials/posts/content', 'none');
-            }
-            ?>
-
-            <!-- Pagination -->
-            <ul class='pagination justify-content-center mb-4'>
-                <li class='page-item'>
-                    <?php previous_posts_link(__('&larr; Older')); ?>
-                </li>
-                <li class='page-item'>
-                    <?php next_posts_link(__('Newer &rarr;')); ?>
-                </li>
-            </ul>
         </div>
         <?php get_sidebar(); ?>
     </div>
