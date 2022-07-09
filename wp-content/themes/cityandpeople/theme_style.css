@@ -158,3 +158,11 @@ a.next.page-numbers {
     top: 30px;
   }
 }
+
+#object_archive .card-header,
+#object_archive .card-body,
+#object_archive h1,
+#object_archive h5,
+#object_archive p {
+  width: 100%;
+}

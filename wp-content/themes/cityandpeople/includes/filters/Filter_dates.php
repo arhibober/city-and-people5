@@ -59,6 +59,12 @@ class Filter_dates
 		} else {
 			get_template_part('partials/posts/content', 'none');
 		}
+		echo paginate_links([
+			'base'    => get_site_url() . '/page/%#%',
+			'current' => max(1, get_query_var('page')),
+			'before_page_number' => '&nbsp;',
+			'total' => $query->max_num_pages,
+		]);
 		die();
 	}
 }
