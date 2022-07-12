@@ -155,11 +155,11 @@ get_header('v2'); ?>
             <form action='<?php echo site_url() ?>/wp-admin/admin-ajax.php' method='POST' id='filter'>
                 <input type='date' name='old_date' placeholder='<?php _e('The oldest date'); ?>' <?php
 																									if (isset($_GET['old_date']))
-																										echo 'value="' . $_GET['old_date'];
+																										echo ' value="' . $_GET['old_date'] . '"';
 																									?> />
                 <input type='date' name='new_date' placeholder='<?php _e('The newsest date'); ?>' <?php
 																									if (isset($_GET['new_date']))
-																										echo 'value="' . $_GET['new_date'];
+																										echo ' value="' . $_GET['new_date'] . '"';
 																									?> />
                 <?php
 				$queried_object = get_queried_object();

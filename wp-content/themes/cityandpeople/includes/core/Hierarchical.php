@@ -24,7 +24,7 @@ class Hierarchical
 			echo "<li>
 				<input type='checkbox' name='taxonomies[]' value='" . $taxonomy->term_id . "'";
 			if (in_array($taxonomy->term_id, $current_taxonomies))
-				echo ' selected';
+				echo ' checked';
 			echo '/>' . $taxonomy->name;
 			self::child_list($taxonomy->children, $current_taxonomies);
 			echo "</li>";

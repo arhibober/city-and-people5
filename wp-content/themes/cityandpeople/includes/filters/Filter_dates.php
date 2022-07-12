@@ -52,7 +52,7 @@ class Filter_dates
 				$args['tax_query'][0]['taxonomy'] = 'city_object_taxonomy';
 				foreach ($_POST['taxonomies'] as $taxonomy) {
 					$args['tax_query'][0]['terms'][] = $taxonomy;
-					$address .= 'taxonomies[]=' . $taxonomy;
+					$address .= '&taxonomies[]=' . $taxonomy;
 				}
 			}
 		}
