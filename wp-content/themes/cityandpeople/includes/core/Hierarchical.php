@@ -16,14 +16,17 @@ class Hierarchical
 		}
 	}
 
-	public static function child_list($taxonomies)
+	public static function child_list($taxonomies, $current_taxonomies = [])
 	{
 		if (count($taxonomies) > 0)
-			echo "<ul>";
+			echo '<ul>';
 		foreach ($taxonomies as $taxonomy) {
 			echo "<li>
-				<input type='checkbox' name='taxonomies[]' value='" . $taxonomy->term_id . "'/>" . $taxonomy->name;
-			self::child_list($taxonomy->children);
+				<input type='checkbox' name='taxonomies[]' value='" . $taxonomy->term_id . "'";
+			if (in_array($taxonomy->term_id, $current_taxonomies))
+				echo ' selected';
+			echo '/>' . $taxonomy->name;
+			self::child_list($taxonomy->children, $current_taxonomies);
 			echo "</li>";
 		}
 		if (count($taxonomies) > 0)
