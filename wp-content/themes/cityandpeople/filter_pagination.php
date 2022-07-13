@@ -69,16 +69,6 @@ get_header('v2'); ?>
             <?php the_tags('', ', '); ?>
 
             <hr />
-
-            <!-- Pagination -->
-            <ul class='pagination justify-content-center mb-4'>
-                <li class='page-item'>
-                    <?php previous_post_link(); ?>
-                </li>
-                <li class='page-item'>
-                    <?php next_post_link(); ?>
-                </li>
-            </ul>
             <?PHP
 			}
 			?>
